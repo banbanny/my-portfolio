@@ -160,7 +160,7 @@ export default function Footer() {
             <div style={{ flex: 1, overflowY: "auto", background: "#fff" }}>
               {/* Page 1 */}
               <img
-                src="/cv-page1.png"
+                src="/cv-page1.jpg"
                 alt="CV Page 1"
                 style={{ width: "100%", display: "block" }}
               />
