@@ -13,7 +13,7 @@ const certifications = [
 ];
 
 type Cert = typeof certifications[0];
-
+s
 function Lightbox({ cert, index, onClose, onPrev, onNext }: { cert: Cert; index: number; onClose: () => void; onPrev: () => void; onNext: () => void }) {
   const total = certifications.length;
   return (

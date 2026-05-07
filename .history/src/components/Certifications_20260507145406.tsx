@@ -9,7 +9,7 @@ const certifications = [
   { id: 4, label: "Introduction to Large Language Models", issuer: "Google", year: "2026", image: "/cert3.jpg" },
   { id: 3, label: "Learn PHP and MySQL for Web Application and Web Development", issuer: "Udemy", year: "2024", image: "/cert4.jpg" },
   { id: 5, label: "PHP with MYSQL", issuer: "Udemy", year: "2024", image: "/cert5.jpg" },
-  { id: 6, label: "React JS", issuer: "Simple Learn", year: "2026", image: "/cert6.jpg" },
+  { id: 6, label: "React JS", issuer: "Simple Learn", year: "2022", image: "/cert6.jpg" },
 ];
 
 type Cert = typeof certifications[0];
