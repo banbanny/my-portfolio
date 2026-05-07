@@ -5,11 +5,11 @@ import { useState, useRef, useEffect } from "react";
 // ── Edit your certificate titles, issuers, years, and image filenames here ──
 const certifications = [
   { id: 1, label: "Build Complete CMS Blog in PHP MySQL Bootstrap & PDO", issuer: "Udemy", year: "2024", image: "/cert1.jpg" },
-  { id: 2, label: "Full Stack Developer Course", issuer: "Simple Learn", year: "2026", image: "/cert2.jpg" },
-    { id: 3, label: "Introduction to Large Language Models", issuer: "Google", year: "2026", image: "/cert3.jpg" },
-  { id: 4, label: "Learn PHP and MySQL for Web Application and Web Development", issuer: "Udemy", year: "2024", image: "/cert4.jpg" },
+  { id: 2, label: "PHP with MySQL", issuer: "Udemy", year: "2024", image: "/cert2.jpg" },
+    { id: 4, label: "Introduction to Large Language Models", issuer: "Google", year: "2026", image: "/cert4.jpg" },
+  { id: 3, label: "Learn PHP and MySQL for Web Application and Web Development", issuer: "Udemy", year: "2024", image: "/cert3.jpg" },
   { id: 5, label: "PHP with MYSQL", issuer: "Udemy", year: "2024", image: "/cert5.jpg" },
-  { id: 6, label: "React JS", issuer: "SimpleLearn", year: "2026", image: "/cert6.jpg" },
+  { id: 6, label: "React JS", issuer: "SimpleLearn", year: "2022", image: "/cert6.jpg" },
 ];
 
 type Cert = typeof certifications[0];
