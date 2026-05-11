@@ -63,9 +63,9 @@ const projects: Project[] = [
     title: "Flash Review",
     type: "app",
     description: "Flash Review is a study companion designed to help students learn more effectively through interactive flashcards. It encourages active recall and repetition, making it easier to remember lessons, terms, and important concepts.",
-    thumbnail: "/flash-thumbnail.png",
+    thumbnail: "/flashreview.png",
     repo: "https://github.com/banbanny/flashreview.git",
-    screenshots: ["/Home.png", "/Review.png", "/ReviewerSet.png"],
+    screenshots: ["/flashreview.png", "/flashreview.png", "/flashreview.png"],
   },
   {
     id: 7,
@@ -252,22 +252,20 @@ function BehanceCard() {
           <div className="be-dot-bg" aria-hidden="true" />
           <div className="be-glow" aria-hidden="true" />
 
-          {/* Behance logo — styled text like official wordmark */}
+          {/* Behance logo image */}
           <div style={{ position:"relative", marginBottom:"24px" }}>
             <div className="be-logo-wrap">
-              <div style={{
-                fontSize: "clamp(52px, 10vw, 88px)",
-                fontWeight: 900,
-                fontFamily: "'Roboto', sans-serif",
-                letterSpacing: "-2px",
-                lineHeight: 1,
-                color: "#fff",
-                textShadow: "0 0 30px rgba(244,52,52,0.8), 0 0 60px rgba(244,52,52,0.4)",
-                userSelect: "none",
-                display: "inline-block",
-              }}>
-                B<span style={{ textDecoration: "overline", textDecorationColor: "#fff" }}>e</span>
-              </div>
+              <img
+                src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c5/Behance_logo.svg/2560px-Behance_logo.svg.png"
+                alt="Behance"
+                style={{
+                  width: "clamp(120px, 18vw, 200px)",
+                  height: "auto",
+                  margin: "0 auto",
+                  display: "block",
+                  filter: "brightness(0) invert(1) drop-shadow(0 0 16px rgba(244,52,52,0.8))",
+                }}
+              />
             </div>
           </div>
 

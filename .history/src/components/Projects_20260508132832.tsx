@@ -11,7 +11,7 @@ interface Project {
   description: string;
   thumbnail: string;
   link?: string;
-  repo?: string;
+  repo?: string;        // ← GitHub repo URL for app projects
   screenshots?: string[];
 }
 
@@ -22,8 +22,8 @@ const projects: Project[] = [
     type: "web",
     description: "This website serves as the official online platform of the church, providing a welcoming space where members and visitors can learn more about the church's mission, beliefs, and community.",
     thumbnail: "/vccc-thumbnail.jpg",
-    repo: "https://github.com/banbanny/vccc-website.git",
-    link: "https://victorychapel-panacan.vercel.app/",
+    repo: "https://github.com/YOUR_USERNAME/flash-review",
+    link: "https://vccc-website-one.vercel.app/",
   },
   {
     id: 2,
@@ -31,8 +31,8 @@ const projects: Project[] = [
     type: "web",
     description: "A fully functional and working portfolio website built with Next.js, showcasing projects, skills, and contact information in a sleek and modern design.",
     thumbnail: "/web-port.png",
-    repo: "https://github.com/banbanny/web-portfolio.git",
-    link: "https://nobody-portfolio.vercel.app/",
+    repo: "https://github.com/YOUR_USERNAME/flash-review",
+    link: "https://web-portfolio-ruby-pi.vercel.app/",
   },
   {
     id: 3,
@@ -62,10 +62,10 @@ const projects: Project[] = [
     id: 6,
     title: "Flash Review",
     type: "app",
-    description: "Flash Review is a study companion designed to help students learn more effectively through interactive flashcards. It encourages active recall and repetition, making it easier to remember lessons, terms, and important concepts.",
-    thumbnail: "/flash-thumbnail.png",
-    repo: "https://github.com/banbanny/flashreview.git",
-    screenshots: ["/Home.png", "/Review.png", "/ReviewerSet.png"],
+    description: "Flash Review is a study companion designed to help students learn more effectively through interactive flashcards. It encourages active recall and repetition, making it easier to remember lessons, terms, and important concepts. ",
+    thumbnail: "/flashreview.png",
+    repo: "https://github.com/banbanny/flashreview.git", // ← replace with your repo URL
+    screenshots: ["/flashreview.png", "/flashreview.png", "/flashreview.png"],
   },
   {
     id: 7,
@@ -101,6 +101,7 @@ function useInView(threshold = 0.15) {
   return { ref, inView };
 }
 
+// ── App Screenshot Modal ──
 function AppModal({ project, onClose }: { project: Project; onClose: () => void }) {
   const [current, setCurrent] = useState(0);
   const touchStartX = useRef<number | null>(null);
@@ -135,8 +136,8 @@ function AppModal({ project, onClose }: { project: Project; onClose: () => void 
           <div style={{ display:"flex", alignItems:"center", gap:"10px" }}>
             <span style={{ fontSize:"11px", fontWeight:500, color:"rgba(255,255,255,0.35)", background:"rgba(255,255,255,0.07)", border:"1px solid rgba(255,255,255,0.1)", borderRadius:"20px", padding:"3px 11px", whiteSpace:"nowrap" }}>{current + 1} / {total}</span>
             <div>
-              <p style={{ fontSize:"12px", color:"#fff", margin:"0 0 2px", fontWeight:700, letterSpacing:"0.06em", textTransform:"uppercase", fontFamily:"'Roboto', sans-serif" }}>{project.title}</p>
-              <p style={{ fontSize:"11px", color:"#1a73e8", margin:0, fontFamily:"'Roboto', sans-serif" }}>App Screenshots</p>
+              <p style={{ fontSize:"12px", color:"#fff", margin:"0 0 2px", fontWeight:700, letterSpacing:"0.06em", textTransform:"uppercase" }}>{project.title}</p>
+              <p style={{ fontSize:"11px", color:"#1a73e8", margin:0 }}>App Screenshots</p>
             </div>
           </div>
           <div style={{ display:"flex", alignItems:"center", gap:"6px" }}>
@@ -144,21 +145,23 @@ function AppModal({ project, onClose }: { project: Project; onClose: () => void 
               <button key={label} onClick={fn} style={{ fontSize:"16px", color:"rgba(255,255,255,0.6)", background:"rgba(255,255,255,0.06)", border:"1px solid rgba(255,255,255,0.12)", borderRadius:"6px", width:"34px", height:"34px", cursor:"pointer", display:"flex", alignItems:"center", justifyContent:"center" }}>{label}</button>
             ))}
             <div style={{ width:"1px", height:"22px", background:"rgba(255,255,255,0.1)", margin:"0 2px" }} />
-            <button onClick={onClose} style={{ fontSize:"11px", fontWeight:500, color:"rgba(255,255,255,0.5)", background:"transparent", border:"1px solid rgba(255,255,255,0.14)", borderRadius:"6px", padding:"0 12px", height:"34px", cursor:"pointer", letterSpacing:"0.08em", textTransform:"uppercase", whiteSpace:"nowrap", fontFamily:"'Roboto', sans-serif" }}>Close ✕</button>
+            <button onClick={onClose} style={{ fontSize:"11px", fontWeight:500, color:"rgba(255,255,255,0.5)", background:"transparent", border:"1px solid rgba(255,255,255,0.14)", borderRadius:"6px", padding:"0 12px", height:"34px", cursor:"pointer", letterSpacing:"0.08em", textTransform:"uppercase", whiteSpace:"nowrap" }}>Close ✕</button>
           </div>
         </div>
         <div style={{ position:"relative", width:"100%", background:"#111", overflow:"hidden" }} onTouchStart={onTouchStart} onTouchEnd={onTouchEnd}>
           <div style={{ position:"relative", width:"100%", aspectRatio:"16/9" }}>
             {screenshots.map((src, i) => (
               <img key={i} src={src} alt={`${project.title} screen ${i + 1}`}
-                style={{ position:"absolute", inset:0, width:"100%", height:"100%", objectFit:"contain", opacity: i === current ? 1 : 0, transform: i === current ? "translateX(0)" : i < current ? "translateX(-60px)" : "translateX(60px)", transition:"opacity 0.3s ease, transform 0.3s cubic-bezier(0.22,1,0.36,1)", pointerEvents:"none" }} />
+                style={{ position:"absolute", inset:0, width:"100%", height:"100%", objectFit:"contain", opacity: i === current ? 1 : 0, transform: i === current ? "translateX(0)" : i < current ? "translateX(-60px)" : "translateX(60px)", transition:"opacity 0.3s ease, transform 0.3s cubic-bezier(0.22,1,0.36,1)", pointerEvents:"none" }}
+              />
             ))}
           </div>
           {total > 1 && (
             <div style={{ display:"flex", justifyContent:"center", gap:"6px", padding:"10px 0 12px" }}>
               {screenshots.map((_, i) => (
                 <button key={i} onClick={() => setCurrent(i)}
-                  style={{ width: i === current ? "20px" : "7px", height:"7px", borderRadius:"4px", background: i === current ? "#1a73e8" : "rgba(255,255,255,0.25)", border:"none", padding:0, cursor:"pointer", transition:"all 0.3s ease" }} />
+                  style={{ width: i === current ? "20px" : "7px", height:"7px", borderRadius:"4px", background: i === current ? "#1a73e8" : "rgba(255,255,255,0.25)", border:"none", padding:0, cursor:"pointer", transition:"all 0.3s ease" }}
+                />
               ))}
             </div>
           )}
@@ -168,6 +171,7 @@ function AppModal({ project, onClose }: { project: Project; onClose: () => void 
   );
 }
 
+// ── GitHub icon SVG ──
 function GithubIcon() {
   return (
     <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor" style={{ flexShrink: 0 }}>
@@ -195,34 +199,69 @@ function ProjectCard({ project, index }: { project: Project; index: number }) {
           onMouseEnter={() => setHovered(true)}
           onMouseLeave={() => setHovered(false)}
           onClick={handleCardClick}
-          style={{ display:"block", borderRadius:"12px", overflow:"hidden", border:`1px solid ${hovered ? "rgba(244,52,52,0.45)" : "rgba(244,52,52,0.15)"}`, background: hovered ? "rgba(244,52,52,0.06)" : "rgba(255,255,255,0.03)", transform: hovered ? "translateY(-5px)" : "translateY(0)", transition:"all 0.3s cubic-bezier(0.34,1.56,0.64,1)", cursor:"pointer" }}>
+          style={{ display:"block", borderRadius:"12px", overflow:"hidden", border:`1px solid ${hovered ? "rgba(244,52,52,0.45)" : "rgba(244,52,52,0.15)"}`, background: hovered ? "rgba(244,52,52,0.06)" : "rgba(255,255,255,0.03)", transform: hovered ? "translateY(-5px)" : "translateY(0)", transition:"all 0.3s cubic-bezier(0.34,1.56,0.64,1)", cursor:"pointer" }}
+        >
+          {/* Thumbnail */}
           <div style={{ position:"relative", width:"100%", aspectRatio:"16/9", overflow:"hidden" }}>
             <img src={project.thumbnail} alt="" aria-hidden="true" style={{ position:"absolute", inset:0, width:"100%", height:"100%", objectFit:"cover", filter:"blur(18px) brightness(0.4) saturate(1.4)", transform:"scale(1.15)", pointerEvents:"none" }} />
             <img src={project.thumbnail} alt={project.title} style={{ position:"relative", zIndex:1, width:"100%", height:"100%", objectFit:"contain", transform: hovered ? "scale(1.04)" : "scale(1)", transition:"transform 0.5s ease", display:"block" }}
               onError={(e) => { (e.target as HTMLImageElement).style.display = "none"; }} />
             <div style={{ position:"absolute", inset:0, zIndex:2, background:"rgba(0,0,0,0.5)", opacity: hovered ? 1 : 0, transition:"opacity 0.3s ease", display:"flex", alignItems:"center", justifyContent:"center" }}>
-              <span style={{ fontSize:"12px", fontFamily:"'Roboto', sans-serif", color:"#fff", letterSpacing:"0.12em", textTransform:"uppercase", border:"1px solid rgba(255,255,255,0.6)", padding:"8px 16px", borderRadius:"4px" }}>
+              <span style={{ fontSize:"12px", fontFamily:"monospace", color:"#fff", letterSpacing:"0.12em", textTransform:"uppercase", border:"1px solid rgba(255,255,255,0.6)", padding:"8px 16px", borderRadius:"4px" }}>
                 {isApp && "View Screenshots →"}
                 {project.type === "web" && "Visit Site →"}
                 {project.type === "figma" && "Open in Figma →"}
               </span>
             </div>
-            <span style={{ position:"absolute", top:"10px", left:"10px", zIndex:3, fontSize:"10px", fontFamily:"'Roboto', sans-serif", letterSpacing:"0.08em", textTransform:"uppercase", color:"#fff", background:cfg.badge, padding:"3px 10px", borderRadius:"4px" }}>{cfg.label}</span>
+            <span style={{ position:"absolute", top:"10px", left:"10px", zIndex:3, fontSize:"10px", fontFamily:"monospace", letterSpacing:"0.08em", textTransform:"uppercase", color:"#fff", background:cfg.badge, padding:"3px 10px", borderRadius:"4px" }}>{cfg.label}</span>
           </div>
+
+          {/* Info */}
           <div style={{ padding:"14px" }}>
-            <h3 style={{ fontFamily:"'Roboto', sans-serif", fontSize:"clamp(11px, 1.5vw, 13px)", fontWeight:700, textTransform:"uppercase", letterSpacing:"0.06em", color:"#fff", margin:"0 0 6px" }}>{project.title}</h3>
-            <p style={{ fontSize:"11px", fontFamily:"'Roboto', sans-serif", color:"#6b7280", lineHeight:1.6, margin:0 }}>{project.description}</p>
-            {(isApp || project.type === "web") && project.repo && (
-              <a href={project.repo} target="_blank" rel="noopener noreferrer" onClick={(e) => e.stopPropagation()}
-                style={{ display:"inline-flex", alignItems:"center", gap:"6px", marginTop:"12px", padding:"7px 14px", fontSize:"10px", fontFamily:"'Roboto', sans-serif", letterSpacing:"0.1em", textTransform:"uppercase", color:"#fff", background:"rgba(255,255,255,0.06)", border:"1px solid rgba(255,255,255,0.18)", borderRadius:"5px", textDecoration:"none", transition:"background 0.2s ease, border-color 0.2s ease" }}
-                onMouseEnter={(e) => { (e.currentTarget as HTMLAnchorElement).style.background = "rgba(255,255,255,0.12)"; (e.currentTarget as HTMLAnchorElement).style.borderColor = "rgba(255,255,255,0.4)"; }}
-                onMouseLeave={(e) => { (e.currentTarget as HTMLAnchorElement).style.background = "rgba(255,255,255,0.06)"; (e.currentTarget as HTMLAnchorElement).style.borderColor = "rgba(255,255,255,0.18)"; }}>
-                <GithubIcon /> View Repository
+            <h3 style={{ fontFamily:"inherit", fontSize:"clamp(11px, 1.5vw, 13px)", fontWeight:700, textTransform:"uppercase", letterSpacing:"0.06em", color:"#fff", margin:"0 0 6px" }}>{project.title}</h3>
+            <p style={{ fontSize:"11px", fontFamily:"monospace", color:"#6b7280", lineHeight:1.6, margin:0 }}>{project.description}</p>
+
+            {/* View Repository button — only for app projects with a repo */}
+           {(isApp || project.type === "web") && project.repo && (
+              <a
+                href={project.repo}
+                target="_blank"
+                rel="noopener noreferrer"
+                onClick={(e) => e.stopPropagation()} // don't trigger card click
+                style={{
+                  display: "inline-flex",
+                  alignItems: "center",
+                  gap: "6px",
+                  marginTop: "12px",
+                  padding: "7px 14px",
+                  fontSize: "10px",
+                  fontFamily: "monospace",
+                  letterSpacing: "0.1em",
+                  textTransform: "uppercase",
+                  color: "#fff",
+                  background: "rgba(255,255,255,0.06)",
+                  border: "1px solid rgba(255,255,255,0.18)",
+                  borderRadius: "5px",
+                  textDecoration: "none",
+                  transition: "background 0.2s ease, border-color 0.2s ease",
+                }}
+                onMouseEnter={(e) => {
+                  (e.currentTarget as HTMLAnchorElement).style.background = "rgba(255,255,255,0.12)";
+                  (e.currentTarget as HTMLAnchorElement).style.borderColor = "rgba(255,255,255,0.4)";
+                }}
+                onMouseLeave={(e) => {
+                  (e.currentTarget as HTMLAnchorElement).style.background = "rgba(255,255,255,0.06)";
+                  (e.currentTarget as HTMLAnchorElement).style.borderColor = "rgba(255,255,255,0.18)";
+                }}
+              >
+                <GithubIcon />
+                View Repository
               </a>
             )}
           </div>
         </div>
       </div>
+
       {modalOpen && <AppModal project={project} onClose={() => setModalOpen(false)} />}
     </>
   );
@@ -234,57 +273,40 @@ function BehanceCard() {
   return (
     <>
       <style>{`
-        @keyframes dotPulse  { 0%,100% { opacity:0.12; } 50% { opacity:0.35; } }
-        @keyframes beFloat   { 0%,100% { transform:translateY(0px); } 50% { transform:translateY(-8px); } }
-        @keyframes redGlow   { 0%,100% { opacity:0.35; } 50% { opacity:0.65; } }
-        @keyframes arrowBounce { 0%,100% { transform:translate(0,0); } 50% { transform:translate(3px,-3px); } }
-        .be-dot-bg   { position:absolute; inset:0; background-image:radial-gradient(circle, rgba(244,52,52,0.13) 1px, transparent 1px); background-size:28px 28px; animation:dotPulse 4s ease-in-out infinite; border-radius:16px; pointer-events:none; }
-        .be-glow     { position:absolute; top:50%; left:50%; transform:translate(-50%,-50%); width:360px; height:240px; background:radial-gradient(ellipse, rgba(244,52,52,0.22) 0%, rgba(180,0,0,0.08) 50%, transparent 75%); animation:redGlow 3.5s ease-in-out infinite; pointer-events:none; }
-        .be-logo-wrap{ animation:beFloat 3.2s ease-in-out infinite; display:inline-block; }
-        .be-cta-btn  { display:inline-flex; align-items:center; gap:10px; padding:13px 36px; font-size:11px; font-family:'Roboto', sans-serif; letter-spacing:0.18em; text-transform:uppercase; color:#fff; border:1px solid rgba(244,52,52,0.4); border-radius:6px; background:rgba(244,52,52,0.08); text-decoration:none; transition:all 0.3s ease; }
-        .be-cta-btn:hover { background:rgba(244,52,52,0.2); border-color:rgba(244,52,52,0.9); box-shadow:0 0 24px rgba(244,52,52,0.4); transform:translateY(-2px); }
+        @keyframes dotPulse { 0%,100% { opacity:0.18; } 50% { opacity:0.45; } }
+        @keyframes beFloat { 0%,100% { transform:translateY(0px); } 50% { transform:translateY(-7px); } }
+        @keyframes glowPulse { 0%,100% { opacity:0.3; } 50% { opacity:0.6; } }
+        .behance-dot-bg { position:absolute; inset:0; background-image:radial-gradient(circle, rgba(255,255,255,0.13) 1px, transparent 1px); background-size:28px 28px; animation:dotPulse 4s ease-in-out infinite; border-radius:16px; }
+        .be-logo-wrap { animation:beFloat 3.2s ease-in-out infinite; display:inline-block; }
+        .be-glow { position:absolute; top:50%; left:50%; transform:translate(-50%,-50%); width:260px; height:160px; background:radial-gradient(ellipse, rgba(30,80,255,0.18) 0%, transparent 70%); animation:glowPulse 3s ease-in-out infinite; pointer-events:none; }
+        .behance-cta-btn { display:inline-flex; align-items:center; gap:10px; padding:14px 38px; font-size:12px; font-family:monospace; letter-spacing:0.16em; text-transform:uppercase; color:#fff; border:1px solid rgba(255,255,255,0.25); border-radius:6px; background:rgba(255,255,255,0.06); text-decoration:none; transition:all 0.3s ease; }
+        .behance-cta-btn:hover { background:rgba(255,255,255,0.14); border-color:rgba(255,255,255,0.55); transform:translateY(-2px); }
       `}</style>
       <div ref={ref} style={{ opacity: inView ? 1 : 0, transform: inView ? "translateY(0)" : "translateY(28px)", transition:"opacity 0.6s ease, transform 0.6s ease" }}>
-        <div
-          onMouseEnter={() => setHovered(true)}
-          onMouseLeave={() => setHovered(false)}
-          style={{ position:"relative", overflow:"hidden", borderRadius:"16px", border:`1px solid ${hovered ? "rgba(244,52,52,0.45)" : "rgba(244,52,52,0.15)"}`, background:"#0d0b0b", padding:"clamp(40px, 8vw, 72px) clamp(20px, 5vw, 40px) clamp(36px, 7vw, 56px)", textAlign:"center", transition:"border-color 0.4s ease, box-shadow 0.4s ease", boxShadow: hovered ? "0 0 60px rgba(244,52,52,0.15)" : "none" }}>
-          <div className="be-dot-bg" aria-hidden="true" />
+        <div onMouseEnter={() => setHovered(true)} onMouseLeave={() => setHovered(false)}
+          style={{ position:"relative", overflow:"hidden", borderRadius:"16px", border:`1px solid ${hovered ? "rgba(255,255,255,0.14)" : "rgba(255,255,255,0.07)"}`, background:"#08080f", padding:"clamp(40px, 8vw, 72px) clamp(20px, 5vw, 40px) clamp(36px, 7vw, 56px)", textAlign:"center", transition:"border-color 0.4s ease" }}>
+          <div className="behance-dot-bg" aria-hidden="true" />
           <div className="be-glow" aria-hidden="true" />
-
-          {/* Behance logo — styled text like official wordmark */}
-          <div style={{ position:"relative", marginBottom:"24px" }}>
+          <div style={{ position:"relative", marginBottom:"20px" }}>
             <div className="be-logo-wrap">
-              <div style={{
-                fontSize: "clamp(52px, 10vw, 88px)",
-                fontWeight: 900,
-                fontFamily: "'Roboto', sans-serif",
-                letterSpacing: "-2px",
-                lineHeight: 1,
-                color: "#fff",
-                textShadow: "0 0 30px rgba(244,52,52,0.8), 0 0 60px rgba(244,52,52,0.4)",
-                userSelect: "none",
-                display: "inline-block",
-              }}>
-                B<span style={{ textDecoration: "overline", textDecorationColor: "#fff" }}>e</span>
-              </div>
+             <svg width="88" height="88" viewBox="0 0 24 24" fill="white" style={{ margin:"0 auto", display:"block" }} aria-label="Behance">
+                    <path d="M9.404 7.03c.484 0 .924.044 1.32.14.395.093.737.245 1.019.453.282.207.502.477.656.809.153.33.23.727.23 1.186 0 
+                    .51-.116.937-.347 1.28-.23.34-.563.623-1 .847.602.173 1.05.476 1.343.907.292.43.438.949.438 1.556 0 .51-.097.953-.29 1.329-
+                    .194.376-.46.686-.797.931-.337.244-.727.425-1.17.541-.44.117-.9.175-1.376.175H4V7.03h5.404zm-.27 4.098c.414 0 .752-.099 1.011-
+                    .295.258-.196.387-.502.387-.917 0-.23-.041-.42-.124-.572a.976.976 0 00-.332-.366 1.398 1.398 0 00-.483-.196 2.52 2.52 0 00-.574-
+                    .06H6.3v2.406h2.834zm.156 4.295c.217 0 .423-.02.617-.063a1.49 1.49 0 00.506-.213 1.07 1.07 0 00.347-.397c.087-.167.13-.378.13-.633 0-.504-.141-.862-.422-1.075-.281-.212-.655-.319-1.12-.319H6.3v2.7h2.99zM17.68 7.42h4.853v1.286H17.68V7.42zm2.543 9.355c-.41.401-.997.601-1.763.601-.49 0-.912-.086-1.267-.258a2.62 2.62 0 01-.874-.672 2.713 2.713 0 01-.506-.94 3.745 3.745 0 01-.158-.995h6.857c.028-.632-.037-1.229-.194-1.79a4.151 4.151 0 00-.732-1.457 3.47 3.47 0 00-1.26-.98c-.508-.24-1.1-.36-1.775-.36-.618 0-1.185.114-1.703.342a3.98 3.98 0 00-1.317.933 4.194 4.194 0 00-.849 1.399c-.2.534-.3 1.112-.3 1.733 0 .64.096 1.225.286 1.754.19.53.468.984.832 1.364.363.38.808.672 1.333.879.525.207 1.124.31 1.8.31.882 0 1.629-.207 2.24-.62.612-.413 1.029-1.06 1.253-1.942h-1.846c-.103.366-.346.65-.757 1.05l-.001-.001zm-1.643-5.026c.336 0 .636.057.9.17.263.113.487.268.67.464.184.197.322.427.415.692.093.265.143.549.15.85h-4.783c.05-.62.27-1.118.66-1.495.39-.376.896-.564 1.517-.564l-.529-.117z"/>
+             </svg>
             </div>
           </div>
-
-          <p style={{ position:"relative", fontFamily:"'Roboto', sans-serif", fontSize:"11px", letterSpacing:"0.22em", textTransform:"uppercase", color:"rgba(255,255,255,0.35)", marginBottom:"28px" }}>
-            All Graphic Design Work Lives on Behance
-          </p>
-          <div style={{ position:"relative", marginBottom:"40px" }}>
-            <a href="https://www.behance.net/ivanneobediente23" target="_blank" rel="noopener noreferrer" className="be-cta-btn">
-              View on Behance
-              <span style={{ fontSize:"15px", display:"inline-block", animation:"arrowBounce 1.4s ease-in-out infinite" }}>↗</span>
-            </a>
+          <p style={{ position:"relative", fontFamily:"monospace", fontSize:"11px", letterSpacing:"0.22em", textTransform:"uppercase", color:"rgba(255,255,255,0.35)", marginBottom:"32px" }}>All Graphic Design Work Lives on Behance</p>
+          <div style={{ position:"relative", marginBottom:"44px" }}>
+            <a href="https://www.behance.net/YOUR_BEHANCE_USERNAME" target="_blank" rel="noopener noreferrer" className="behance-cta-btn">View on Behance <span style={{ fontSize:"16px" }}>↗</span></a>
           </div>
           <div style={{ position:"relative", display:"flex", alignItems:"center", justifyContent:"center", flexWrap:"wrap", gap:"4px" }}>
             {["Brand Identity", "Social Media", "Print Design"].map((tag, i, arr) => (
               <span key={tag} style={{ display:"flex", alignItems:"center" }}>
-                <span style={{ fontSize:"11px", fontFamily:"'Roboto', sans-serif", letterSpacing:"0.12em", textTransform:"uppercase", color:"rgba(255,255,255,0.25)", padding:"0 14px" }}>{tag}</span>
-                {i < arr.length - 1 && <span style={{ color:"rgba(244,52,52,0.2)" }}>|</span>}
+                <span style={{ fontSize:"11px", fontFamily:"monospace", letterSpacing:"0.12em", textTransform:"uppercase", color:"rgba(255,255,255,0.28)", padding:"0 16px" }}>{tag}</span>
+                {i < arr.length - 1 && <span style={{ color:"rgba(255,255,255,0.15)" }}>|</span>}
               </span>
             ))}
           </div>
@@ -313,7 +335,7 @@ export default function Projects() {
       <div className="relative max-w-6xl mx-auto px-5 sm:px-6">
         <div className="text-center mb-12 md:mb-16">
           <div style={{ display:"inline-block" }}>
-            <h2 style={{ fontFamily:"'Roboto', sans-serif", fontWeight:900, textTransform:"uppercase", color:"#fff", fontSize:"clamp(2rem, 6vw, 3.5rem)", margin:0, letterSpacing:"0.05em" }}>PROJECTS</h2>
+            <h2 className="font-black-roboto uppercase text-white" style={{ fontSize:"clamp(2rem, 6vw, 3.5rem)", margin:0 }}>PROJECTS</h2>
             <div style={{ width:"25%", height:"3px", background:"#F43434", marginTop:"10px", borderRadius:"2px" }} />
           </div>
         </div>
@@ -322,7 +344,7 @@ export default function Projects() {
             const isActive = active === f.value;
             return (
               <button key={f.value} onClick={() => handleFilter(f.value)}
-                style={{ padding:"8px 16px", fontSize:"10px", fontFamily:"'Roboto', sans-serif", letterSpacing:"0.1em", textTransform:"uppercase", color: isActive ? "#fff" : "#9ca3af", background: isActive ? "#F43434" : "transparent", border:`1px solid ${isActive ? "#F43434" : "rgba(244,52,52,0.3)"}`, borderRadius:"4px", cursor:"pointer", transition:"all 0.25s ease" }}
+                style={{ padding:"8px 16px", fontSize:"10px", fontFamily:"monospace", letterSpacing:"0.1em", textTransform:"uppercase", color: isActive ? "#fff" : "#9ca3af", background: isActive ? "#F43434" : "transparent", border:`1px solid ${isActive ? "#F43434" : "rgba(244,52,52,0.3)"}`, borderRadius:"4px", cursor:"pointer", transition:"all 0.25s ease" }}
                 onMouseEnter={(e) => { if (!isActive) { (e.currentTarget as HTMLButtonElement).style.borderColor = "rgba(244,52,52,0.7)"; (e.currentTarget as HTMLButtonElement).style.color = "#fff"; } }}
                 onMouseLeave={(e) => { if (!isActive) { (e.currentTarget as HTMLButtonElement).style.borderColor = "rgba(244,52,52,0.3)"; (e.currentTarget as HTMLButtonElement).style.color = "#9ca3af"; } }}>
                 {f.label}

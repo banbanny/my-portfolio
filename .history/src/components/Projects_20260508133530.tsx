@@ -11,7 +11,7 @@ interface Project {
   description: string;
   thumbnail: string;
   link?: string;
-  repo?: string;
+  repo?: string;        // ← GitHub repo URL for app projects
   screenshots?: string[];
 }
 
@@ -62,10 +62,10 @@ const projects: Project[] = [
     id: 6,
     title: "Flash Review",
     type: "app",
-    description: "Flash Review is a study companion designed to help students learn more effectively through interactive flashcards. It encourages active recall and repetition, making it easier to remember lessons, terms, and important concepts.",
-    thumbnail: "/flash-thumbnail.png",
-    repo: "https://github.com/banbanny/flashreview.git",
-    screenshots: ["/Home.png", "/Review.png", "/ReviewerSet.png"],
+    description: "Flash Review is a study companion designed to help students learn more effectively through interactive flashcards. It encourages active recall and repetition, making it easier to remember lessons, terms, and important concepts. ",
+    thumbnail: "/flashreview.png",
+    repo: "https://github.com/banbanny/flashreview.git", // ← replace with your repo URL
+    screenshots: ["/flashreview.png", "/flashreview.png", "/flashreview.png"],
   },
   {
     id: 7,
@@ -101,6 +101,7 @@ function useInView(threshold = 0.15) {
   return { ref, inView };
 }
 
+// ── App Screenshot Modal ──
 function AppModal({ project, onClose }: { project: Project; onClose: () => void }) {
   const [current, setCurrent] = useState(0);
   const touchStartX = useRef<number | null>(null);
@@ -135,8 +136,8 @@ function AppModal({ project, onClose }: { project: Project; onClose: () => void 
           <div style={{ display:"flex", alignItems:"center", gap:"10px" }}>
             <span style={{ fontSize:"11px", fontWeight:500, color:"rgba(255,255,255,0.35)", background:"rgba(255,255,255,0.07)", border:"1px solid rgba(255,255,255,0.1)", borderRadius:"20px", padding:"3px 11px", whiteSpace:"nowrap" }}>{current + 1} / {total}</span>
             <div>
-              <p style={{ fontSize:"12px", color:"#fff", margin:"0 0 2px", fontWeight:700, letterSpacing:"0.06em", textTransform:"uppercase", fontFamily:"'Roboto', sans-serif" }}>{project.title}</p>
-              <p style={{ fontSize:"11px", color:"#1a73e8", margin:0, fontFamily:"'Roboto', sans-serif" }}>App Screenshots</p>
+              <p style={{ fontSize:"12px", color:"#fff", margin:"0 0 2px", fontWeight:700, letterSpacing:"0.06em", textTransform:"uppercase" }}>{project.title}</p>
+              <p style={{ fontSize:"11px", color:"#1a73e8", margin:0 }}>App Screenshots</p>
             </div>
           </div>
           <div style={{ display:"flex", alignItems:"center", gap:"6px" }}>
@@ -144,21 +145,23 @@ function AppModal({ project, onClose }: { project: Project; onClose: () => void 
               <button key={label} onClick={fn} style={{ fontSize:"16px", color:"rgba(255,255,255,0.6)", background:"rgba(255,255,255,0.06)", border:"1px solid rgba(255,255,255,0.12)", borderRadius:"6px", width:"34px", height:"34px", cursor:"pointer", display:"flex", alignItems:"center", justifyContent:"center" }}>{label}</button>
             ))}
             <div style={{ width:"1px", height:"22px", background:"rgba(255,255,255,0.1)", margin:"0 2px" }} />
-            <button onClick={onClose} style={{ fontSize:"11px", fontWeight:500, color:"rgba(255,255,255,0.5)", background:"transparent", border:"1px solid rgba(255,255,255,0.14)", borderRadius:"6px", padding:"0 12px", height:"34px", cursor:"pointer", letterSpacing:"0.08em", textTransform:"uppercase", whiteSpace:"nowrap", fontFamily:"'Roboto', sans-serif" }}>Close ✕</button>
+            <button onClick={onClose} style={{ fontSize:"11px", fontWeight:500, color:"rgba(255,255,255,0.5)", background:"transparent", border:"1px solid rgba(255,255,255,0.14)", borderRadius:"6px", padding:"0 12px", height:"34px", cursor:"pointer", letterSpacing:"0.08em", textTransform:"uppercase", whiteSpace:"nowrap" }}>Close ✕</button>
           </div>
         </div>
         <div style={{ position:"relative", width:"100%", background:"#111", overflow:"hidden" }} onTouchStart={onTouchStart} onTouchEnd={onTouchEnd}>
           <div style={{ position:"relative", width:"100%", aspectRatio:"16/9" }}>
             {screenshots.map((src, i) => (
               <img key={i} src={src} alt={`${project.title} screen ${i + 1}`}
-                style={{ position:"absolute", inset:0, width:"100%", height:"100%", objectFit:"contain", opacity: i === current ? 1 : 0, transform: i === current ? "translateX(0)" : i < current ? "translateX(-60px)" : "translateX(60px)", transition:"opacity 0.3s ease, transform 0.3s cubic-bezier(0.22,1,0.36,1)", pointerEvents:"none" }} />
+                style={{ position:"absolute", inset:0, width:"100%", height:"100%", objectFit:"contain", opacity: i === current ? 1 : 0, transform: i === current ? "translateX(0)" : i < current ? "translateX(-60px)" : "translateX(60px)", transition:"opacity 0.3s ease, transform 0.3s cubic-bezier(0.22,1,0.36,1)", pointerEvents:"none" }}
+              />
             ))}
           </div>
           {total > 1 && (
             <div style={{ display:"flex", justifyContent:"center", gap:"6px", padding:"10px 0 12px" }}>
               {screenshots.map((_, i) => (
                 <button key={i} onClick={() => setCurrent(i)}
-                  style={{ width: i === current ? "20px" : "7px", height:"7px", borderRadius:"4px", background: i === current ? "#1a73e8" : "rgba(255,255,255,0.25)", border:"none", padding:0, cursor:"pointer", transition:"all 0.3s ease" }} />
+                  style={{ width: i === current ? "20px" : "7px", height:"7px", borderRadius:"4px", background: i === current ? "#1a73e8" : "rgba(255,255,255,0.25)", border:"none", padding:0, cursor:"pointer", transition:"all 0.3s ease" }}
+                />
               ))}
             </div>
           )}
@@ -168,6 +171,7 @@ function AppModal({ project, onClose }: { project: Project; onClose: () => void 
   );
 }
 
+// ── GitHub icon SVG ──
 function GithubIcon() {
   return (
     <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor" style={{ flexShrink: 0 }}>
@@ -195,34 +199,69 @@ function ProjectCard({ project, index }: { project: Project; index: number }) {
           onMouseEnter={() => setHovered(true)}
           onMouseLeave={() => setHovered(false)}
           onClick={handleCardClick}
-          style={{ display:"block", borderRadius:"12px", overflow:"hidden", border:`1px solid ${hovered ? "rgba(244,52,52,0.45)" : "rgba(244,52,52,0.15)"}`, background: hovered ? "rgba(244,52,52,0.06)" : "rgba(255,255,255,0.03)", transform: hovered ? "translateY(-5px)" : "translateY(0)", transition:"all 0.3s cubic-bezier(0.34,1.56,0.64,1)", cursor:"pointer" }}>
+          style={{ display:"block", borderRadius:"12px", overflow:"hidden", border:`1px solid ${hovered ? "rgba(244,52,52,0.45)" : "rgba(244,52,52,0.15)"}`, background: hovered ? "rgba(244,52,52,0.06)" : "rgba(255,255,255,0.03)", transform: hovered ? "translateY(-5px)" : "translateY(0)", transition:"all 0.3s cubic-bezier(0.34,1.56,0.64,1)", cursor:"pointer" }}
+        >
+          {/* Thumbnail */}
           <div style={{ position:"relative", width:"100%", aspectRatio:"16/9", overflow:"hidden" }}>
             <img src={project.thumbnail} alt="" aria-hidden="true" style={{ position:"absolute", inset:0, width:"100%", height:"100%", objectFit:"cover", filter:"blur(18px) brightness(0.4) saturate(1.4)", transform:"scale(1.15)", pointerEvents:"none" }} />
             <img src={project.thumbnail} alt={project.title} style={{ position:"relative", zIndex:1, width:"100%", height:"100%", objectFit:"contain", transform: hovered ? "scale(1.04)" : "scale(1)", transition:"transform 0.5s ease", display:"block" }}
               onError={(e) => { (e.target as HTMLImageElement).style.display = "none"; }} />
             <div style={{ position:"absolute", inset:0, zIndex:2, background:"rgba(0,0,0,0.5)", opacity: hovered ? 1 : 0, transition:"opacity 0.3s ease", display:"flex", alignItems:"center", justifyContent:"center" }}>
-              <span style={{ fontSize:"12px", fontFamily:"'Roboto', sans-serif", color:"#fff", letterSpacing:"0.12em", textTransform:"uppercase", border:"1px solid rgba(255,255,255,0.6)", padding:"8px 16px", borderRadius:"4px" }}>
+              <span style={{ fontSize:"12px", fontFamily:"monospace", color:"#fff", letterSpacing:"0.12em", textTransform:"uppercase", border:"1px solid rgba(255,255,255,0.6)", padding:"8px 16px", borderRadius:"4px" }}>
                 {isApp && "View Screenshots →"}
                 {project.type === "web" && "Visit Site →"}
                 {project.type === "figma" && "Open in Figma →"}
               </span>
             </div>
-            <span style={{ position:"absolute", top:"10px", left:"10px", zIndex:3, fontSize:"10px", fontFamily:"'Roboto', sans-serif", letterSpacing:"0.08em", textTransform:"uppercase", color:"#fff", background:cfg.badge, padding:"3px 10px", borderRadius:"4px" }}>{cfg.label}</span>
+            <span style={{ position:"absolute", top:"10px", left:"10px", zIndex:3, fontSize:"10px", fontFamily:"monospace", letterSpacing:"0.08em", textTransform:"uppercase", color:"#fff", background:cfg.badge, padding:"3px 10px", borderRadius:"4px" }}>{cfg.label}</span>
           </div>
+
+          {/* Info */}
           <div style={{ padding:"14px" }}>
-            <h3 style={{ fontFamily:"'Roboto', sans-serif", fontSize:"clamp(11px, 1.5vw, 13px)", fontWeight:700, textTransform:"uppercase", letterSpacing:"0.06em", color:"#fff", margin:"0 0 6px" }}>{project.title}</h3>
-            <p style={{ fontSize:"11px", fontFamily:"'Roboto', sans-serif", color:"#6b7280", lineHeight:1.6, margin:0 }}>{project.description}</p>
-            {(isApp || project.type === "web") && project.repo && (
-              <a href={project.repo} target="_blank" rel="noopener noreferrer" onClick={(e) => e.stopPropagation()}
-                style={{ display:"inline-flex", alignItems:"center", gap:"6px", marginTop:"12px", padding:"7px 14px", fontSize:"10px", fontFamily:"'Roboto', sans-serif", letterSpacing:"0.1em", textTransform:"uppercase", color:"#fff", background:"rgba(255,255,255,0.06)", border:"1px solid rgba(255,255,255,0.18)", borderRadius:"5px", textDecoration:"none", transition:"background 0.2s ease, border-color 0.2s ease" }}
-                onMouseEnter={(e) => { (e.currentTarget as HTMLAnchorElement).style.background = "rgba(255,255,255,0.12)"; (e.currentTarget as HTMLAnchorElement).style.borderColor = "rgba(255,255,255,0.4)"; }}
-                onMouseLeave={(e) => { (e.currentTarget as HTMLAnchorElement).style.background = "rgba(255,255,255,0.06)"; (e.currentTarget as HTMLAnchorElement).style.borderColor = "rgba(255,255,255,0.18)"; }}>
-                <GithubIcon /> View Repository
+            <h3 style={{ fontFamily:"inherit", fontSize:"clamp(11px, 1.5vw, 13px)", fontWeight:700, textTransform:"uppercase", letterSpacing:"0.06em", color:"#fff", margin:"0 0 6px" }}>{project.title}</h3>
+            <p style={{ fontSize:"11px", fontFamily:"monospace", color:"#6b7280", lineHeight:1.6, margin:0 }}>{project.description}</p>
+
+            {/* View Repository button — only for app projects with a repo */}
+           {(isApp || project.type === "web") && project.repo && (
+              <a
+                href={project.repo}
+                target="_blank"
+                rel="noopener noreferrer"
+                onClick={(e) => e.stopPropagation()} // don't trigger card click
+                style={{
+                  display: "inline-flex",
+                  alignItems: "center",
+                  gap: "6px",
+                  marginTop: "12px",
+                  padding: "7px 14px",
+                  fontSize: "10px",
+                  fontFamily: "monospace",
+                  letterSpacing: "0.1em",
+                  textTransform: "uppercase",
+                  color: "#fff",
+                  background: "rgba(255,255,255,0.06)",
+                  border: "1px solid rgba(255,255,255,0.18)",
+                  borderRadius: "5px",
+                  textDecoration: "none",
+                  transition: "background 0.2s ease, border-color 0.2s ease",
+                }}
+                onMouseEnter={(e) => {
+                  (e.currentTarget as HTMLAnchorElement).style.background = "rgba(255,255,255,0.12)";
+                  (e.currentTarget as HTMLAnchorElement).style.borderColor = "rgba(255,255,255,0.4)";
+                }}
+                onMouseLeave={(e) => {
+                  (e.currentTarget as HTMLAnchorElement).style.background = "rgba(255,255,255,0.06)";
+                  (e.currentTarget as HTMLAnchorElement).style.borderColor = "rgba(255,255,255,0.18)";
+                }}
+              >
+                <GithubIcon />
+                View Repository
               </a>
             )}
           </div>
         </div>
       </div>
+
       {modalOpen && <AppModal project={project} onClose={() => setModalOpen(false)} />}
     </>
   );
@@ -234,57 +273,41 @@ function BehanceCard() {
   return (
     <>
       <style>{`
-        @keyframes dotPulse  { 0%,100% { opacity:0.12; } 50% { opacity:0.35; } }
-        @keyframes beFloat   { 0%,100% { transform:translateY(0px); } 50% { transform:translateY(-8px); } }
-        @keyframes redGlow   { 0%,100% { opacity:0.35; } 50% { opacity:0.65; } }
-        @keyframes arrowBounce { 0%,100% { transform:translate(0,0); } 50% { transform:translate(3px,-3px); } }
-        .be-dot-bg   { position:absolute; inset:0; background-image:radial-gradient(circle, rgba(244,52,52,0.13) 1px, transparent 1px); background-size:28px 28px; animation:dotPulse 4s ease-in-out infinite; border-radius:16px; pointer-events:none; }
-        .be-glow     { position:absolute; top:50%; left:50%; transform:translate(-50%,-50%); width:360px; height:240px; background:radial-gradient(ellipse, rgba(244,52,52,0.22) 0%, rgba(180,0,0,0.08) 50%, transparent 75%); animation:redGlow 3.5s ease-in-out infinite; pointer-events:none; }
-        .be-logo-wrap{ animation:beFloat 3.2s ease-in-out infinite; display:inline-block; }
-        .be-cta-btn  { display:inline-flex; align-items:center; gap:10px; padding:13px 36px; font-size:11px; font-family:'Roboto', sans-serif; letter-spacing:0.18em; text-transform:uppercase; color:#fff; border:1px solid rgba(244,52,52,0.4); border-radius:6px; background:rgba(244,52,52,0.08); text-decoration:none; transition:all 0.3s ease; }
-        .be-cta-btn:hover { background:rgba(244,52,52,0.2); border-color:rgba(244,52,52,0.9); box-shadow:0 0 24px rgba(244,52,52,0.4); transform:translateY(-2px); }
+        @keyframes dotPulse { 0%,100% { opacity:0.18; } 50% { opacity:0.45; } }
+        @keyframes beFloat { 0%,100% { transform:translateY(0px); } 50% { transform:translateY(-7px); } }
+        @keyframes glowPulse { 0%,100% { opacity:0.3; } 50% { opacity:0.6; } }
+        .behance-dot-bg { position:absolute; inset:0; background-image:radial-gradient(circle, rgba(255,255,255,0.13) 1px, transparent 1px); background-size:28px 28px; animation:dotPulse 4s ease-in-out infinite; border-radius:16px; }
+        .be-logo-wrap { animation:beFloat 3.2s ease-in-out infinite; display:inline-block; }
+        .be-glow { position:absolute; top:50%; left:50%; transform:translate(-50%,-50%); width:260px; height:160px; background:radial-gradient(ellipse, rgba(30,80,255,0.18) 0%, transparent 70%); animation:glowPulse 3s ease-in-out infinite; pointer-events:none; }
+        .behance-cta-btn { display:inline-flex; align-items:center; gap:10px; padding:14px 38px; font-size:12px; font-family:monospace; letter-spacing:0.16em; text-transform:uppercase; color:#fff; border:1px solid rgba(255,255,255,0.25); border-radius:6px; background:rgba(255,255,255,0.06); text-decoration:none; transition:all 0.3s ease; }
+        .behance-cta-btn:hover { background:rgba(255,255,255,0.14); border-color:rgba(255,255,255,0.55); transform:translateY(-2px); }
       `}</style>
       <div ref={ref} style={{ opacity: inView ? 1 : 0, transform: inView ? "translateY(0)" : "translateY(28px)", transition:"opacity 0.6s ease, transform 0.6s ease" }}>
-        <div
-          onMouseEnter={() => setHovered(true)}
-          onMouseLeave={() => setHovered(false)}
-          style={{ position:"relative", overflow:"hidden", borderRadius:"16px", border:`1px solid ${hovered ? "rgba(244,52,52,0.45)" : "rgba(244,52,52,0.15)"}`, background:"#0d0b0b", padding:"clamp(40px, 8vw, 72px) clamp(20px, 5vw, 40px) clamp(36px, 7vw, 56px)", textAlign:"center", transition:"border-color 0.4s ease, box-shadow 0.4s ease", boxShadow: hovered ? "0 0 60px rgba(244,52,52,0.15)" : "none" }}>
-          <div className="be-dot-bg" aria-hidden="true" />
+        <div onMouseEnter={() => setHovered(true)} onMouseLeave={() => setHovered(false)}
+          style={{ position:"relative", overflow:"hidden", borderRadius:"16px", border:`1px solid ${hovered ? "rgba(255,255,255,0.14)" : "rgba(255,255,255,0.07)"}`, background:"#08080f", padding:"clamp(40px, 8vw, 72px) clamp(20px, 5vw, 40px) clamp(36px, 7vw, 56px)", textAlign:"center", transition:"border-color 0.4s ease" }}>
+          <div className="behance-dot-bg" aria-hidden="true" />
           <div className="be-glow" aria-hidden="true" />
-
-          {/* Behance logo — styled text like official wordmark */}
-          <div style={{ position:"relative", marginBottom:"24px" }}>
+          <div style={{ position:"relative", marginBottom:"20px" }}>
             <div className="be-logo-wrap">
-              <div style={{
-                fontSize: "clamp(52px, 10vw, 88px)",
-                fontWeight: 900,
-                fontFamily: "'Roboto', sans-serif",
-                letterSpacing: "-2px",
-                lineHeight: 1,
-                color: "#fff",
-                textShadow: "0 0 30px rgba(244,52,52,0.8), 0 0 60px rgba(244,52,52,0.4)",
-                userSelect: "none",
-                display: "inline-block",
-              }}>
-                B<span style={{ textDecoration: "overline", textDecorationColor: "#fff" }}>e</span>
-              </div>
-            </div>
+           <svg width="120" height="80" viewBox="0 0 120 80" fill="white" style={{ margin:"0 auto", display:"block" }} aria-label="Behance">
+                {/* B */}
+                <path d="M0 10h28c6 0 10.5 1.5 13.5 4.5S46 22 46 27c0 3.5-.8 6.5-2.5 8.8-1.1 1.5-2.7 2.8-4.8 3.8 3.2 1 5.6 2.7 7.2 5 1.6 2.3 2.4 5.2 2.4 8.5 0 3.5-.8 6.6-2.5 9.2-1.1 1.7-2.5 3.2-4.3 4.4-2 1.3-4.2 2.2-6.8 2.6C32.8 69.8 30 70 27 70H0V10zm13 22h13c2.6 0 4.5-.6 5.8-1.7 1.3-1.1 1.9-2.8 1.9-5 0-2.4-.7-4-2.1-5-1.4-1-3.4-1.5-6-1.5H13v13.2zm0 25h15c2.8 0 5-.7 6.5-2 1.5-1.3 2.2-3.3 2.2-5.8 0-2.3-.8-4-2.3-5.2-1.5-1.2-3.8-1.8-6.7-1.8H13V57z"/>
+                {/* e with bar */}
+                <path d="M120 46H84.5c.2 3.3 1.3 5.8 3.2 7.5 1.9 1.7 4.3 2.6 7.1 2.6 2.6 0 4.7-.6 6.4-1.8 1-.7 2-1.8 3-3.4H120c-.8 3.8-2.9 6.9-6.2 9.3-3.3 2.4-7.4 3.6-12.3 3.6-4.4 0-8.4-1-11.8-3-3.4-2-5.9-4.8-7.7-8.4-1.7-3.6-2.6-7.8-2.6-12.5 0-4.6.9-8.7 2.6-12.3 1.8-3.6 4.3-6.4 7.7-8.4 3.4-2 7.2-3 11.6-3 4.2 0 8 1 11.2 2.9 3.3 2 5.8 4.7 7.5 8.2 1.8 3.5 2.7 7.5 2.5 12.2L120 46zm-12.5-8c-.3-3-1.3-5.2-3-6.8-1.7-1.6-3.9-2.4-6.5-2.4-2.8 0-5 .8-6.7 2.5-1.7 1.6-2.7 3.9-3 6.7h19.2z"/>
+                {/* bar over e */}
+                <rect x="82" y="8" width="35" height="6" rx="3"/>
+              </svg>
+           </div>
           </div>
-
-          <p style={{ position:"relative", fontFamily:"'Roboto', sans-serif", fontSize:"11px", letterSpacing:"0.22em", textTransform:"uppercase", color:"rgba(255,255,255,0.35)", marginBottom:"28px" }}>
-            All Graphic Design Work Lives on Behance
-          </p>
-          <div style={{ position:"relative", marginBottom:"40px" }}>
-            <a href="https://www.behance.net/ivanneobediente23" target="_blank" rel="noopener noreferrer" className="be-cta-btn">
-              View on Behance
-              <span style={{ fontSize:"15px", display:"inline-block", animation:"arrowBounce 1.4s ease-in-out infinite" }}>↗</span>
-            </a>
+          <p style={{ position:"relative", fontFamily:"monospace", fontSize:"11px", letterSpacing:"0.22em", textTransform:"uppercase", color:"rgba(255,255,255,0.35)", marginBottom:"32px" }}>All Graphic Design Work Lives on Behance</p>
+          <div style={{ position:"relative", marginBottom:"44px" }}>
+            <a href="https://www.behance.net/YOUR_BEHANCE_USERNAME" target="_blank" rel="noopener noreferrer" className="behance-cta-btn">View on Behance <span style={{ fontSize:"16px" }}>↗</span></a>
           </div>
           <div style={{ position:"relative", display:"flex", alignItems:"center", justifyContent:"center", flexWrap:"wrap", gap:"4px" }}>
             {["Brand Identity", "Social Media", "Print Design"].map((tag, i, arr) => (
               <span key={tag} style={{ display:"flex", alignItems:"center" }}>
-                <span style={{ fontSize:"11px", fontFamily:"'Roboto', sans-serif", letterSpacing:"0.12em", textTransform:"uppercase", color:"rgba(255,255,255,0.25)", padding:"0 14px" }}>{tag}</span>
-                {i < arr.length - 1 && <span style={{ color:"rgba(244,52,52,0.2)" }}>|</span>}
+                <span style={{ fontSize:"11px", fontFamily:"monospace", letterSpacing:"0.12em", textTransform:"uppercase", color:"rgba(255,255,255,0.28)", padding:"0 16px" }}>{tag}</span>
+                {i < arr.length - 1 && <span style={{ color:"rgba(255,255,255,0.15)" }}>|</span>}
               </span>
             ))}
           </div>
@@ -313,7 +336,7 @@ export default function Projects() {
       <div className="relative max-w-6xl mx-auto px-5 sm:px-6">
         <div className="text-center mb-12 md:mb-16">
           <div style={{ display:"inline-block" }}>
-            <h2 style={{ fontFamily:"'Roboto', sans-serif", fontWeight:900, textTransform:"uppercase", color:"#fff", fontSize:"clamp(2rem, 6vw, 3.5rem)", margin:0, letterSpacing:"0.05em" }}>PROJECTS</h2>
+            <h2 className="font-black-roboto uppercase text-white" style={{ fontSize:"clamp(2rem, 6vw, 3.5rem)", margin:0 }}>PROJECTS</h2>
             <div style={{ width:"25%", height:"3px", background:"#F43434", marginTop:"10px", borderRadius:"2px" }} />
           </div>
         </div>
@@ -322,7 +345,7 @@ export default function Projects() {
             const isActive = active === f.value;
             return (
               <button key={f.value} onClick={() => handleFilter(f.value)}
-                style={{ padding:"8px 16px", fontSize:"10px", fontFamily:"'Roboto', sans-serif", letterSpacing:"0.1em", textTransform:"uppercase", color: isActive ? "#fff" : "#9ca3af", background: isActive ? "#F43434" : "transparent", border:`1px solid ${isActive ? "#F43434" : "rgba(244,52,52,0.3)"}`, borderRadius:"4px", cursor:"pointer", transition:"all 0.25s ease" }}
+                style={{ padding:"8px 16px", fontSize:"10px", fontFamily:"monospace", letterSpacing:"0.1em", textTransform:"uppercase", color: isActive ? "#fff" : "#9ca3af", background: isActive ? "#F43434" : "transparent", border:`1px solid ${isActive ? "#F43434" : "rgba(244,52,52,0.3)"}`, borderRadius:"4px", cursor:"pointer", transition:"all 0.25s ease" }}
                 onMouseEnter={(e) => { if (!isActive) { (e.currentTarget as HTMLButtonElement).style.borderColor = "rgba(244,52,52,0.7)"; (e.currentTarget as HTMLButtonElement).style.color = "#fff"; } }}
                 onMouseLeave={(e) => { if (!isActive) { (e.currentTarget as HTMLButtonElement).style.borderColor = "rgba(244,52,52,0.3)"; (e.currentTarget as HTMLButtonElement).style.color = "#9ca3af"; } }}>
                 {f.label}

@@ -63,9 +63,9 @@ const projects: Project[] = [
     title: "Flash Review",
     type: "app",
     description: "Flash Review is a study companion designed to help students learn more effectively through interactive flashcards. It encourages active recall and repetition, making it easier to remember lessons, terms, and important concepts.",
-    thumbnail: "/flash-thumbnail.png",
+    thumbnail: "/flashreview.png",
     repo: "https://github.com/banbanny/flashreview.git",
-    screenshots: ["/Home.png", "/Review.png", "/ReviewerSet.png"],
+    screenshots: ["/flashreview.png", "/flashreview.png", "/flashreview.png"],
   },
   {
     id: 7,

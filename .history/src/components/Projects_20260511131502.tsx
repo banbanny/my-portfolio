@@ -63,9 +63,9 @@ const projects: Project[] = [
     title: "Flash Review",
     type: "app",
     description: "Flash Review is a study companion designed to help students learn more effectively through interactive flashcards. It encourages active recall and repetition, making it easier to remember lessons, terms, and important concepts.",
-    thumbnail: "/flash-thumbnail.png",
+    thumbnail: "/flashreview.png",
     repo: "https://github.com/banbanny/flashreview.git",
-    screenshots: ["/Home.png", "/Review.png", "/ReviewerSet.png"],
+    screenshots: ["/flashreview.png", "/flashreview.png", "/flashreview.png"],
   },
   {
     id: 7,
@@ -130,7 +130,7 @@ function AppModal({ project, onClose }: { project: Project; onClose: () => void 
 
   return (
     <div onClick={onClose} style={{ position:"fixed", inset:0, zIndex:200, background:"rgba(0,0,0,0.92)", display:"flex", alignItems:"center", justifyContent:"center", padding:"16px", backdropFilter:"blur(6px)" }}>
-      <div onClick={(e) => e.stopPropagation()} style={{ maxWidth:"900px", width:"100%", borderRadius:"14px", overflow:"hidden", border:"1px solid rgba(26,115,232,0.35)" }}>
+      <div onClick={(e) => e.stopPropagation()} style={{ maxWidth:"420px", width:"100%", borderRadius:"14px", overflow:"hidden", border:"1px solid rgba(26,115,232,0.35)" }}>
         <div style={{ background:"#0d0d0d", padding:"12px 16px", display:"flex", justifyContent:"space-between", alignItems:"center", borderBottom:"1px solid rgba(255,255,255,0.06)", flexWrap:"wrap", gap:"8px" }}>
           <div style={{ display:"flex", alignItems:"center", gap:"10px" }}>
             <span style={{ fontSize:"11px", fontWeight:500, color:"rgba(255,255,255,0.35)", background:"rgba(255,255,255,0.07)", border:"1px solid rgba(255,255,255,0.1)", borderRadius:"20px", padding:"3px 11px", whiteSpace:"nowrap" }}>{current + 1} / {total}</span>
@@ -147,15 +147,29 @@ function AppModal({ project, onClose }: { project: Project; onClose: () => void 
             <button onClick={onClose} style={{ fontSize:"11px", fontWeight:500, color:"rgba(255,255,255,0.5)", background:"transparent", border:"1px solid rgba(255,255,255,0.14)", borderRadius:"6px", padding:"0 12px", height:"34px", cursor:"pointer", letterSpacing:"0.08em", textTransform:"uppercase", whiteSpace:"nowrap", fontFamily:"'Roboto', sans-serif" }}>Close ✕</button>
           </div>
         </div>
-        <div style={{ position:"relative", width:"100%", background:"#111", overflow:"hidden" }} onTouchStart={onTouchStart} onTouchEnd={onTouchEnd}>
-          <div style={{ position:"relative", width:"100%", aspectRatio:"16/9" }}>
-            {screenshots.map((src, i) => (
-              <img key={i} src={src} alt={`${project.title} screen ${i + 1}`}
-                style={{ position:"absolute", inset:0, width:"100%", height:"100%", objectFit:"contain", opacity: i === current ? 1 : 0, transform: i === current ? "translateX(0)" : i < current ? "translateX(-60px)" : "translateX(60px)", transition:"opacity 0.3s ease, transform 0.3s cubic-bezier(0.22,1,0.36,1)", pointerEvents:"none" }} />
-            ))}
+        {/* Portrait screenshot viewer */}
+        <div style={{ background:"#111", display:"flex", flexDirection:"column", alignItems:"center", padding:"20px 16px 16px" }} onTouchStart={onTouchStart} onTouchEnd={onTouchEnd}>
+          <div style={{ position:"relative", width:"100%", maxWidth:"280px", margin:"0 auto" }}>
+            {/* Phone frame */}
+            <div style={{ position:"relative", borderRadius:"28px", overflow:"hidden", border:"2px solid rgba(255,255,255,0.12)", boxShadow:"0 0 40px rgba(0,0,0,0.6)", background:"#000", aspectRatio:"9/19" }}>
+              {screenshots.map((src, i) => (
+                <img key={i} src={src} alt={`${project.title} screen ${i + 1}`}
+                  style={{ position:"absolute", inset:0, width:"100%", height:"100%", objectFit:"cover", objectPosition:"top", opacity: i === current ? 1 : 0, transform: i === current ? "translateX(0)" : i < current ? "translateX(-40px)" : "translateX(40px)", transition:"opacity 0.3s ease, transform 0.3s cubic-bezier(0.22,1,0.36,1)", pointerEvents:"none" }} />
+              ))}
+            </div>
+
+            {/* Left / Right tap zones */}
+            {total > 1 && (
+              <>
+                <button onClick={prev} style={{ position:"absolute", left:"-40px", top:"50%", transform:"translateY(-50%)", background:"rgba(255,255,255,0.07)", border:"1px solid rgba(255,255,255,0.12)", borderRadius:"50%", width:"32px", height:"32px", color:"rgba(255,255,255,0.7)", cursor:"pointer", display:"flex", alignItems:"center", justifyContent:"center", fontSize:"14px" }}>←</button>
+                <button onClick={next} style={{ position:"absolute", right:"-40px", top:"50%", transform:"translateY(-50%)", background:"rgba(255,255,255,0.07)", border:"1px solid rgba(255,255,255,0.12)", borderRadius:"50%", width:"32px", height:"32px", color:"rgba(255,255,255,0.7)", cursor:"pointer", display:"flex", alignItems:"center", justifyContent:"center", fontSize:"14px" }}>→</button>
+              </>
+            )}
           </div>
+
+          {/* Dot indicators */}
           {total > 1 && (
-            <div style={{ display:"flex", justifyContent:"center", gap:"6px", padding:"10px 0 12px" }}>
+            <div style={{ display:"flex", justifyContent:"center", gap:"6px", marginTop:"16px" }}>
               {screenshots.map((_, i) => (
                 <button key={i} onClick={() => setCurrent(i)}
                   style={{ width: i === current ? "20px" : "7px", height:"7px", borderRadius:"4px", background: i === current ? "#1a73e8" : "rgba(255,255,255,0.25)", border:"none", padding:0, cursor:"pointer", transition:"all 0.3s ease" }} />

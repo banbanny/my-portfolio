@@ -4,11 +4,14 @@ import { useEffect, useState } from "react";
 
 const WORDS = ["MAKING", "IDEAS", "COME TO", "LIFE"];
 const WORD_COLORS = ["#FFFFFF", "#F43434", "#FFFFFF", "#FFFFFF"];
+// How long each character takes to type (ms)
 const CHAR_SPEED = 80;
+// Pause between words (ms)
 const WORD_PAUSE = 180;
 
 export default function Hero() {
   const [mounted, setMounted] = useState(false);
+  // typed[i] = number of chars revealed for word i
   const [typed, setTyped] = useState([0, 0, 0, 0]);
   const [imgVisible, setImgVisible] = useState(false);
 
@@ -21,15 +24,16 @@ export default function Hero() {
 
     let wordIndex = 0;
     let charIndex = 0;
-    let timeout: ReturnType<typeof setTimeout>;
+    let timeout;
 
     const typeNext = () => {
       if (wordIndex >= WORDS.length) {
+        // All words done — trigger mobile image animation
         setTimeout(() => setImgVisible(true), 200);
         return;
       }
 
-      const word = WORDS[wordIndex];
+   const WordLine = ({ index }: { index: number }) => (
 
       if (charIndex <= word.length) {
         setTyped((prev) => {
@@ -40,17 +44,20 @@ export default function Hero() {
         charIndex++;
         timeout = setTimeout(typeNext, CHAR_SPEED);
       } else {
+        // Word complete, move to next after pause
         wordIndex++;
         charIndex = 0;
         timeout = setTimeout(typeNext, WORD_PAUSE);
       }
     };
 
+    // Small initial delay before starting
     timeout = setTimeout(typeNext, 400);
     return () => clearTimeout(timeout);
   }, [mounted]);
 
-  const getDisplay = (wordIdx: number) => {
+  // Build displayed text: typed chars + invisible placeholder to hold layout
+  const getDisplay = (wordIdx) => {
     const word = WORDS[wordIdx];
     const count = typed[wordIdx];
     const visible = word.slice(0, count);

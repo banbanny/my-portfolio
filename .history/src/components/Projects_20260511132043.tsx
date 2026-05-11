@@ -63,9 +63,9 @@ const projects: Project[] = [
     title: "Flash Review",
     type: "app",
     description: "Flash Review is a study companion designed to help students learn more effectively through interactive flashcards. It encourages active recall and repetition, making it easier to remember lessons, terms, and important concepts.",
-    thumbnail: "/flash-thumbnail.png",
+    thumbnail: "/flashreview.png",
     repo: "https://github.com/banbanny/flashreview.git",
-    screenshots: ["/Home.png", "/Review.png", "/ReviewerSet.png"],
+    screenshots: ["/flashreview.png", "/flashreview.png", "/flashreview.png"],
   },
   {
     id: 7,
@@ -130,32 +130,58 @@ function AppModal({ project, onClose }: { project: Project; onClose: () => void 
 
   return (
     <div onClick={onClose} style={{ position:"fixed", inset:0, zIndex:200, background:"rgba(0,0,0,0.92)", display:"flex", alignItems:"center", justifyContent:"center", padding:"16px", backdropFilter:"blur(6px)" }}>
-      <div onClick={(e) => e.stopPropagation()} style={{ maxWidth:"900px", width:"100%", borderRadius:"14px", overflow:"hidden", border:"1px solid rgba(26,115,232,0.35)" }}>
-        <div style={{ background:"#0d0d0d", padding:"12px 16px", display:"flex", justifyContent:"space-between", alignItems:"center", borderBottom:"1px solid rgba(255,255,255,0.06)", flexWrap:"wrap", gap:"8px" }}>
-          <div style={{ display:"flex", alignItems:"center", gap:"10px" }}>
-            <span style={{ fontSize:"11px", fontWeight:500, color:"rgba(255,255,255,0.35)", background:"rgba(255,255,255,0.07)", border:"1px solid rgba(255,255,255,0.1)", borderRadius:"20px", padding:"3px 11px", whiteSpace:"nowrap" }}>{current + 1} / {total}</span>
+      <div onClick={(e) => e.stopPropagation()}
+        style={{ width:"100%", maxWidth:"340px", borderRadius:"14px", overflow:"hidden", border:"1px solid rgba(26,115,232,0.35)", background:"#0d0d0d", display:"flex", flexDirection:"column" }}>
+
+        {/* Header */}
+        <div style={{ padding:"10px 14px", display:"flex", justifyContent:"space-between", alignItems:"center", borderBottom:"1px solid rgba(255,255,255,0.06)", flexShrink:0 }}>
+          <div style={{ display:"flex", alignItems:"center", gap:"8px" }}>
+            <span style={{ fontSize:"10px", fontWeight:500, color:"rgba(255,255,255,0.35)", background:"rgba(255,255,255,0.07)", border:"1px solid rgba(255,255,255,0.1)", borderRadius:"20px", padding:"2px 9px", whiteSpace:"nowrap" }}>{current + 1} / {total}</span>
             <div>
-              <p style={{ fontSize:"12px", color:"#fff", margin:"0 0 2px", fontWeight:700, letterSpacing:"0.06em", textTransform:"uppercase", fontFamily:"'Roboto', sans-serif" }}>{project.title}</p>
-              <p style={{ fontSize:"11px", color:"#1a73e8", margin:0, fontFamily:"'Roboto', sans-serif" }}>App Screenshots</p>
+              <p style={{ fontSize:"11px", color:"#fff", margin:"0 0 1px", fontWeight:700, letterSpacing:"0.05em", textTransform:"uppercase", fontFamily:"'Roboto', sans-serif" }}>{project.title}</p>
+              <p style={{ fontSize:"10px", color:"#1a73e8", margin:0, fontFamily:"'Roboto', sans-serif" }}>App Screenshots</p>
             </div>
           </div>
-          <div style={{ display:"flex", alignItems:"center", gap:"6px" }}>
-            {total > 1 && [{ label:"←", fn: prev }, { label:"→", fn: next }].map(({ label, fn }) => (
-              <button key={label} onClick={fn} style={{ fontSize:"16px", color:"rgba(255,255,255,0.6)", background:"rgba(255,255,255,0.06)", border:"1px solid rgba(255,255,255,0.12)", borderRadius:"6px", width:"34px", height:"34px", cursor:"pointer", display:"flex", alignItems:"center", justifyContent:"center" }}>{label}</button>
-            ))}
-            <div style={{ width:"1px", height:"22px", background:"rgba(255,255,255,0.1)", margin:"0 2px" }} />
-            <button onClick={onClose} style={{ fontSize:"11px", fontWeight:500, color:"rgba(255,255,255,0.5)", background:"transparent", border:"1px solid rgba(255,255,255,0.14)", borderRadius:"6px", padding:"0 12px", height:"34px", cursor:"pointer", letterSpacing:"0.08em", textTransform:"uppercase", whiteSpace:"nowrap", fontFamily:"'Roboto', sans-serif" }}>Close ✕</button>
-          </div>
+          <button onClick={onClose} style={{ fontSize:"10px", fontWeight:500, color:"rgba(255,255,255,0.5)", background:"transparent", border:"1px solid rgba(255,255,255,0.14)", borderRadius:"6px", padding:"0 10px", height:"28px", cursor:"pointer", letterSpacing:"0.08em", textTransform:"uppercase", whiteSpace:"nowrap", fontFamily:"'Roboto', sans-serif" }}>✕ Close</button>
         </div>
-        <div style={{ position:"relative", width:"100%", background:"#111", overflow:"hidden" }} onTouchStart={onTouchStart} onTouchEnd={onTouchEnd}>
-          <div style={{ position:"relative", width:"100%", aspectRatio:"16/9" }}>
-            {screenshots.map((src, i) => (
-              <img key={i} src={src} alt={`${project.title} screen ${i + 1}`}
-                style={{ position:"absolute", inset:0, width:"100%", height:"100%", objectFit:"contain", opacity: i === current ? 1 : 0, transform: i === current ? "translateX(0)" : i < current ? "translateX(-60px)" : "translateX(60px)", transition:"opacity 0.3s ease, transform 0.3s cubic-bezier(0.22,1,0.36,1)", pointerEvents:"none" }} />
-            ))}
+
+        {/* Screenshot area */}
+        <div style={{ padding:"16px", background:"#111", display:"flex", flexDirection:"column", alignItems:"center", gap:"14px" }}
+          onTouchStart={onTouchStart} onTouchEnd={onTouchEnd}>
+
+          {/* Phone frame — fixed height so it never overflows */}
+          <div style={{ display:"flex", alignItems:"center", gap:"10px", width:"100%" }}>
+            {total > 1 && (
+              <button onClick={prev} style={{ flexShrink:0, background:"rgba(255,255,255,0.07)", border:"1px solid rgba(255,255,255,0.12)", borderRadius:"50%", width:"30px", height:"30px", color:"rgba(255,255,255,0.7)", cursor:"pointer", display:"flex", alignItems:"center", justifyContent:"center", fontSize:"13px" }}>←</button>
+            )}
+
+            <div style={{ flex:1, display:"flex", justifyContent:"center" }}>
+              <div style={{
+                width:"clamp(120px, 45vw, 180px)",
+                aspectRatio:"9/18",
+                borderRadius:"20px",
+                overflow:"hidden",
+                border:"2px solid rgba(255,255,255,0.15)",
+                boxShadow:"0 8px 32px rgba(0,0,0,0.6)",
+                background:"#000",
+                position:"relative",
+                flexShrink:0,
+              }}>
+                {screenshots.map((src, i) => (
+                  <img key={i} src={src} alt={`${project.title} screen ${i + 1}`}
+                    style={{ position:"absolute", inset:0, width:"100%", height:"100%", objectFit:"cover", objectPosition:"top", opacity: i === current ? 1 : 0, transform: i === current ? "translateX(0)" : i < current ? "translateX(-20px)" : "translateX(20px)", transition:"opacity 0.3s ease, transform 0.3s cubic-bezier(0.22,1,0.36,1)", pointerEvents:"none" }} />
+                ))}
+              </div>
+            </div>
+
+            {total > 1 && (
+              <button onClick={next} style={{ flexShrink:0, background:"rgba(255,255,255,0.07)", border:"1px solid rgba(255,255,255,0.12)", borderRadius:"50%", width:"30px", height:"30px", color:"rgba(255,255,255,0.7)", cursor:"pointer", display:"flex", alignItems:"center", justifyContent:"center", fontSize:"13px" }}>→</button>
+            )}
           </div>
+
+          {/* Dots */}
           {total > 1 && (
-            <div style={{ display:"flex", justifyContent:"center", gap:"6px", padding:"10px 0 12px" }}>
+            <div style={{ display:"flex", justifyContent:"center", gap:"6px" }}>
               {screenshots.map((_, i) => (
                 <button key={i} onClick={() => setCurrent(i)}
                   style={{ width: i === current ? "20px" : "7px", height:"7px", borderRadius:"4px", background: i === current ? "#1a73e8" : "rgba(255,255,255,0.25)", border:"none", padding:0, cursor:"pointer", transition:"all 0.3s ease" }} />
