@@ -40,7 +40,7 @@ const projects: Project[] = [
     type: "figma",
     description: "UI/UX design for a Portfolio.",
     thumbnail: "/figma1.png",
-    link: "https://www.figma.com/proto/EyCfhBKFXjLAKqL8eLewip/Untitled?t=uKdBzslR1CYmzzK0-1&scaling=min-zoom&content-scaling=fixed&page-id=0%3A1&node-id=1-2",
+    link: "https://www.figma.com/file/your-file-id",
   },
   {
     id: 4,
@@ -56,7 +56,7 @@ const projects: Project[] = [
     type: "figma",
     description: "Inventory Management System for 5CRG.",
     thumbnail: "/figma3.png",
-    link: "https://www.figma.com/proto/scE22FnP2lbSipcZ1AXRrj/Untitled?node-id=6-379&t=TfQfWqoJTTs368GQ-1&scaling=min-zoom&content-scaling=fixed&page-id=0%3A1&starting-point-node-id=26%3A2Vhttps://www.figma.com/proto/scE22FnP2lbSipcZ1AXRrj/Untitled?node-id=5-2&p=f&t=OKCg6ttSIO79iE5O-1&scaling=min-zoom&content-scaling=fixed&page-id=0%3A1",
+    link: "https://www.figma.com/file/your-file-id-2",
   },
   {
     id: 6,
@@ -129,96 +129,40 @@ function AppModal({ project, onClose }: { project: Project; onClose: () => void 
   };
 
   return (
-    <div
-      onClick={onClose}
-      style={{
-        position: "fixed", inset: 0, zIndex: 200,
-        background: "rgba(0,0,0,0.92)",
-        display: "flex", alignItems: "center", justifyContent: "center",
-        padding: "clamp(8px, 3vw, 16px)",
-        backdropFilter: "blur(6px)",
-      }}
-    >
-      <div
-        onClick={(e) => e.stopPropagation()}
-        style={{
-          width: "100%",
-          maxWidth: "900px",
-          height: "95dvh",
-          maxHeight: "95dvh",
-          borderRadius: "14px",
-          overflow: "hidden",
-          border: "1px solid rgba(26,115,232,0.35)",
-          display: "flex",
-          flexDirection: "column",
-        }}
-      >
-        {/* Header */}
-        <div style={{
-          background: "#0d0d0d",
-          padding: "10px 12px",
-          display: "flex",
-          justifyContent: "space-between",
-          alignItems: "center",
-          borderBottom: "1px solid rgba(255,255,255,0.06)",
-          flexWrap: "wrap",
-          gap: "8px",
-          flexShrink: 0,
-        }}>
-          <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
-            <span style={{ fontSize: "11px", fontWeight: 500, color: "rgba(255,255,255,0.35)", background: "rgba(255,255,255,0.07)", border: "1px solid rgba(255,255,255,0.1)", borderRadius: "20px", padding: "3px 11px", whiteSpace: "nowrap" }}>
-              {current + 1} / {total}
-            </span>
+    <div onClick={onClose} style={{ position:"fixed", inset:0, zIndex:200, background:"rgba(0,0,0,0.92)", display:"flex", alignItems:"center", justifyContent:"center", padding:"16px", backdropFilter:"blur(6px)" }}>
+      <div onClick={(e) => e.stopPropagation()} style={{ maxWidth:"900px", width:"100%", borderRadius:"14px", overflow:"hidden", border:"1px solid rgba(26,115,232,0.35)" }}>
+        <div style={{ background:"#0d0d0d", padding:"12px 16px", display:"flex", justifyContent:"space-between", alignItems:"center", borderBottom:"1px solid rgba(255,255,255,0.06)", flexWrap:"wrap", gap:"8px" }}>
+          <div style={{ display:"flex", alignItems:"center", gap:"10px" }}>
+            <span style={{ fontSize:"11px", fontWeight:500, color:"rgba(255,255,255,0.35)", background:"rgba(255,255,255,0.07)", border:"1px solid rgba(255,255,255,0.1)", borderRadius:"20px", padding:"3px 11px", whiteSpace:"nowrap" }}>{current + 1} / {total}</span>
             <div>
-              <p style={{ fontSize: "12px", color: "#fff", margin: "0 0 2px", fontWeight: 700, letterSpacing: "0.06em", textTransform: "uppercase", fontFamily: "'Roboto', sans-serif" }}>{project.title}</p>
-              <p style={{ fontSize: "11px", color: "#1a73e8", margin: 0, fontFamily: "'Roboto', sans-serif" }}>App Screenshots</p>
+              <p style={{ fontSize:"12px", color:"#fff", margin:"0 0 2px", fontWeight:700, letterSpacing:"0.06em", textTransform:"uppercase", fontFamily:"'Roboto', sans-serif" }}>{project.title}</p>
+              <p style={{ fontSize:"11px", color:"#1a73e8", margin:0, fontFamily:"'Roboto', sans-serif" }}>App Screenshots</p>
             </div>
           </div>
-          <div style={{ display: "flex", alignItems: "center", gap: "6px" }}>
-            {total > 1 && [{ label: "←", fn: prev }, { label: "→", fn: next }].map(({ label, fn }) => (
-              <button key={label} onClick={fn} style={{ fontSize: "16px", color: "rgba(255,255,255,0.6)", background: "rgba(255,255,255,0.06)", border: "1px solid rgba(255,255,255,0.12)", borderRadius: "6px", width: "34px", height: "34px", cursor: "pointer", display: "flex", alignItems: "center", justifyContent: "center" }}>{label}</button>
+          <div style={{ display:"flex", alignItems:"center", gap:"6px" }}>
+            {total > 1 && [{ label:"←", fn: prev }, { label:"→", fn: next }].map(({ label, fn }) => (
+              <button key={label} onClick={fn} style={{ fontSize:"16px", color:"rgba(255,255,255,0.6)", background:"rgba(255,255,255,0.06)", border:"1px solid rgba(255,255,255,0.12)", borderRadius:"6px", width:"34px", height:"34px", cursor:"pointer", display:"flex", alignItems:"center", justifyContent:"center" }}>{label}</button>
             ))}
-            <div style={{ width: "1px", height: "22px", background: "rgba(255,255,255,0.1)", margin: "0 2px" }} />
-            <button onClick={onClose} style={{ fontSize: "11px", fontWeight: 500, color: "rgba(255,255,255,0.5)", background: "transparent", border: "1px solid rgba(255,255,255,0.14)", borderRadius: "6px", padding: "0 12px", height: "34px", cursor: "pointer", letterSpacing: "0.08em", textTransform: "uppercase", whiteSpace: "nowrap", fontFamily: "'Roboto', sans-serif" }}>Close ✕</button>
+            <div style={{ width:"1px", height:"22px", background:"rgba(255,255,255,0.1)", margin:"0 2px" }} />
+            <button onClick={onClose} style={{ fontSize:"11px", fontWeight:500, color:"rgba(255,255,255,0.5)", background:"transparent", border:"1px solid rgba(255,255,255,0.14)", borderRadius:"6px", padding:"0 12px", height:"34px", cursor:"pointer", letterSpacing:"0.08em", textTransform:"uppercase", whiteSpace:"nowrap", fontFamily:"'Roboto', sans-serif" }}>Close ✕</button>
           </div>
         </div>
-
-        {/* Image area — fills remaining height, no fixed aspect ratio */}
-        <div
-          style={{ position: "relative", flex: 1, background: "#111", overflow: "hidden", minHeight: 0 }}
-          onTouchStart={onTouchStart}
-          onTouchEnd={onTouchEnd}
-        >
-          {screenshots.map((src, i) => (
-            <img
-              key={i}
-              src={src}
-              alt={`${project.title} screen ${i + 1}`}
-              style={{
-                position: "absolute", inset: 0,
-                width: "100%", height: "100%",
-                objectFit: "contain",
-                opacity: i === current ? 1 : 0,
-                transform: i === current ? "translateX(0)" : i < current ? "translateX(-60px)" : "translateX(60px)",
-                transition: "opacity 0.3s ease, transform 0.3s cubic-bezier(0.22,1,0.36,1)",
-                pointerEvents: "none",
-              }}
-            />
-          ))}
-        </div>
-
-        {/* Dots */}
-        {total > 1 && (
-          <div style={{ display: "flex", justifyContent: "center", gap: "6px", padding: "10px 0 12px", background: "#111", flexShrink: 0 }}>
-            {screenshots.map((_, i) => (
-              <button
-                key={i}
-                onClick={() => setCurrent(i)}
-                style={{ width: i === current ? "20px" : "7px", height: "7px", borderRadius: "4px", background: i === current ? "#1a73e8" : "rgba(255,255,255,0.25)", border: "none", padding: 0, cursor: "pointer", transition: "all 0.3s ease" }}
-              />
+        <div style={{ position:"relative", width:"100%", background:"#111", overflow:"hidden" }} onTouchStart={onTouchStart} onTouchEnd={onTouchEnd}>
+          <div style={{ position:"relative", width:"100%", aspectRatio:"16/9" }}>
+            {screenshots.map((src, i) => (
+              <img key={i} src={src} alt={`${project.title} screen ${i + 1}`}
+                style={{ position:"absolute", inset:0, width:"100%", height:"100%", objectFit:"contain", opacity: i === current ? 1 : 0, transform: i === current ? "translateX(0)" : i < current ? "translateX(-60px)" : "translateX(60px)", transition:"opacity 0.3s ease, transform 0.3s cubic-bezier(0.22,1,0.36,1)", pointerEvents:"none" }} />
             ))}
           </div>
-        )}
+          {total > 1 && (
+            <div style={{ display:"flex", justifyContent:"center", gap:"6px", padding:"10px 0 12px" }}>
+              {screenshots.map((_, i) => (
+                <button key={i} onClick={() => setCurrent(i)}
+                  style={{ width: i === current ? "20px" : "7px", height:"7px", borderRadius:"4px", background: i === current ? "#1a73e8" : "rgba(255,255,255,0.25)", border:"none", padding:0, cursor:"pointer", transition:"all 0.3s ease" }} />
+              ))}
+            </div>
+          )}
+        </div>
       </div>
     </div>
   );
@@ -307,13 +251,26 @@ function BehanceCard() {
           style={{ position:"relative", overflow:"hidden", borderRadius:"16px", border:`1px solid ${hovered ? "rgba(244,52,52,0.45)" : "rgba(244,52,52,0.15)"}`, background:"#0d0b0b", padding:"clamp(40px, 8vw, 72px) clamp(20px, 5vw, 40px) clamp(36px, 7vw, 56px)", textAlign:"center", transition:"border-color 0.4s ease, box-shadow 0.4s ease", boxShadow: hovered ? "0 0 60px rgba(244,52,52,0.15)" : "none" }}>
           <div className="be-dot-bg" aria-hidden="true" />
           <div className="be-glow" aria-hidden="true" />
+
+          {/* Behance logo — styled text like official wordmark */}
           <div style={{ position:"relative", marginBottom:"24px" }}>
             <div className="be-logo-wrap">
-              <div style={{ fontSize:"clamp(52px, 10vw, 88px)", fontWeight:900, fontFamily:"'Roboto', sans-serif", letterSpacing:"-2px", lineHeight:1, color:"#fff", textShadow:"0 0 30px rgba(244,52,52,0.8), 0 0 60px rgba(244,52,52,0.4)", userSelect:"none", display:"inline-block" }}>
-                B<span style={{ textDecoration:"overline", textDecorationColor:"#fff" }}>e</span>
+              <div style={{
+                fontSize: "clamp(52px, 10vw, 88px)",
+                fontWeight: 900,
+                fontFamily: "'Roboto', sans-serif",
+                letterSpacing: "-2px",
+                lineHeight: 1,
+                color: "#fff",
+                textShadow: "0 0 30px rgba(244,52,52,0.8), 0 0 60px rgba(244,52,52,0.4)",
+                userSelect: "none",
+                display: "inline-block",
+              }}>
+                B<span style={{ textDecoration: "overline", textDecorationColor: "#fff" }}>e</span>
               </div>
             </div>
           </div>
+
           <p style={{ position:"relative", fontFamily:"'Roboto', sans-serif", fontSize:"11px", letterSpacing:"0.22em", textTransform:"uppercase", color:"rgba(255,255,255,0.35)", marginBottom:"28px" }}>
             All Graphic Design Work Lives on Behance
           </p>

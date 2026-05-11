@@ -65,7 +65,7 @@ const projects: Project[] = [
     description: "Flash Review is a study companion designed to help students learn more effectively through interactive flashcards. It encourages active recall and repetition, making it easier to remember lessons, terms, and important concepts.",
     thumbnail: "/flash-thumbnail.png",
     repo: "https://github.com/banbanny/flashreview.git",
-    screenshots: ["/Home.png", "/Review.png", "/ReviewerSet.png"],
+    screenshots: ["/Home", "/Review.png", "/ReviewerSet.png"],
   },
   {
     id: 7,
@@ -144,7 +144,6 @@ function AppModal({ project, onClose }: { project: Project; onClose: () => void 
         style={{
           width: "100%",
           maxWidth: "900px",
-          height: "95dvh",
           maxHeight: "95dvh",
           borderRadius: "14px",
           overflow: "hidden",

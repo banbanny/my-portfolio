@@ -144,7 +144,7 @@ function AppModal({ project, onClose }: { project: Project; onClose: () => void 
         style={{
           width: "100%",
           maxWidth: "900px",
-          height: "95dvh",
+         height: "95dvh",
           maxHeight: "95dvh",
           borderRadius: "14px",
           overflow: "hidden",
